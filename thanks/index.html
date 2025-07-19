@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" type="image/png" href="/assets/DragonNDusk.png" />
+  <meta property="og:title" content="Thank You – DragonDusk" />
+  <meta property="og:description" content="We can’t thank you enough for supporting our journey. 💙" />
+  <meta property="og:image" content="https://dragondusk.com/assets/Duskbackground.png" />
+  <meta property="og:url" content="https://dragondusk.com/thanks" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thanks – DragonDusk</title>
+  <style>
+    :root {
+      --bg-color: #111;
+      --text-color: #fff;
+      --link-color: #8dcff4;
+    }
+    body.light-mode {
+      --bg-color: #f5f5f5;
+      --text-color: #111;
+      --link-color: #0077cc;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--bg-color) url('/assets/Duskbackground.png') no-repeat fixed;
+      background-size: cover;
+      background-position: 60% center;
+      color: var(--text-color);
+      padding: 40px;
+      max-width: 800px;
+      margin: auto;
+      transition: background 0.3s, color 0.3s, background-image 0.3s;
+    }
+    body.light-mode {
+      background-image: none;
+    }
+    h1, h2 {
+      margin-bottom: 0.5em;
+    }
+    a {
+      color: var(--link-color);
+    }
+    .toggle-theme {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: none;
+      border: 2px solid var(--text-color);
+      color: var(--text-color);
+      padding: 5px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .section {
+      margin-top: 50px;
+    }
+  </style>
+</head>
+<body>
+  <button class="toggle-theme" onclick="toggleTheme()">Toggle Theme</button>
+
+  <h1>Thank You So Much 💙</h1>
+
+  <p>thank you very much for donating to us ❤️ we can’t thank you enough...</p>
+  <p>if you are ever curious u can check further down in the page if there are updates. if you want, you can contact us over email <a href="mailto:dragonndusk@dragondusk.com">dragonndusk@dragondusk.com</a> (or if you know one of us, direct message us) if you would like to be added to a thank you list via either username/name and/or how much u donated :D</p>
+
+  <div class="section" style="text-align: left;">
+    <h2>no updates</h2>
+    <p>currently there are no updates about our situation</p>
+  </div>
+
+  <div class="section" style="text-align: left;">
+    <h2>thanks</h2>
+    <p>list of people that choose to support us, thank you a ton again ❤️</p>
+  </div>
+
+  <script>
+    function toggleTheme() {
+      document.body.classList.toggle("light-mode");
+    }
+  </script>
+</body>
+</html>
