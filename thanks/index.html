@@ -11,6 +11,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Thanks – DragonDusk</title>
   <style>
+    .section-columns {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 40px;
+  margin-top: 50px;
+}
+
+.column {
+  flex: 1;
+  min-width: 250px;
+}
+
     :root {
       --bg-color: #111;
       --text-color: #fff;
@@ -65,15 +78,16 @@
   <p>thank you very much for donating to us ❤️ we can’t thank you enough...</p>
   <p>if you are ever curious u can check further down in the page if there are updates. if you want, you can contact us over email <a href="mailto:dragonndusk@dragondusk.com">dragonndusk@dragondusk.com</a> (or if you know one of us, direct message us) if you would like to be added to a thank you list via either username/name and/or how much u donated :D</p>
 
-  <div class="section" style="text-align: left;">
+  <div class="section-columns">
+  <div class="column">
     <h2>no updates</h2>
     <p>currently there are no updates about our situation</p>
   </div>
-
-  <div class="section" style="text-align: left;">
+  <div class="column">
     <h2>thanks</h2>
     <p>list of people that choose to support us, thank you a ton again ❤️</p>
   </div>
+</div>
 
   <script>
     function toggleTheme() {
