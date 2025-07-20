@@ -171,7 +171,7 @@
     try {
       const res = await fetch(url);
       const text = await res.text();
-      const json = JSON.parse(text.match(/(?<=setResponse\\().*(?=\\);)/s)[0]);
+      const json = JSON.parse(text.substring(47).slice(0, -2));
       const rows = json.table.rows;
 
       let donors = [];
