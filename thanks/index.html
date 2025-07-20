@@ -10,7 +10,6 @@
   <meta property="og:image" content="https://dragondusk.com/assets/Duskbackground.png" />
   <meta property="og:url" content="https://dragondusk.com/thanks" />
   <meta name="twitter:card" content="summary_large_image" />
-
   <style>
     :root {
       --bg-color: #111;
@@ -22,10 +21,8 @@
       --text-color: #111;
       --link-color: #0077cc;
     }
-
     body {
       font-family: Arial, sans-serif;
-      font-size: 1em;
       background: var(--bg-color) url('/assets/Duskbackground.png') no-repeat fixed;
       background-size: cover;
       background-position: 60% center;
@@ -34,7 +31,6 @@
       padding: 0;
       transition: background 0.3s, color 0.3s;
     }
-
     .header {
       display: flex;
       justify-content: space-between;
@@ -42,19 +38,7 @@
       padding: 20px;
       margin-bottom: 40px;
     }
-
-    .back-btn {
-      background: none;
-      border: 2px solid var(--text-color);
-      color: var(--text-color);
-      padding: 5px 10px;
-      border-radius: 6px;
-      cursor: pointer;
-      text-decoration: none;
-      font-size: 0.9em;
-      flex-shrink: 0;
-    }
-
+    .back-btn,
     .toggle-theme {
       background: none;
       border: 2px solid var(--text-color);
@@ -63,39 +47,32 @@
       border-radius: 6px;
       cursor: pointer;
       font-size: 0.9em;
-      flex-shrink: 0;
     }
-
     h1 {
       text-align: center;
       font-size: 1.8rem;
       margin: 0;
       flex: 1;
     }
-
     .content {
       max-width: 1020px;
       margin: 0 auto;
       padding: 0 20px;
     }
-
     h2 {
       font-size: 1.2rem;
       text-align: center;
       margin-top: 1.5em;
       margin-bottom: 0.5em;
     }
-
     p {
       line-height: 1.5;
       margin-bottom: 0.6em;
       text-align: center;
     }
-
     a {
       color: var(--link-color);
     }
-
     .lists-container {
       display: flex;
       justify-content: space-between;
@@ -103,7 +80,6 @@
       margin-top: 30px;
       flex-wrap: wrap;
     }
-
     .list-box {
       flex: 1;
       min-width: 250px;
@@ -112,13 +88,15 @@
       border-radius: 8px;
       border: 1px solid rgba(255, 255, 255, 0.1);
     }
-
+    ul {
+      margin-top: 10px;
+      padding-left: 20px;
+    }
     iframe {
       border: none;
       width: 100%;
       height: 500px;
     }
-
     .iframe-wrapper {
       position: relative;
       border-radius: 12px;
@@ -128,7 +106,6 @@
       border: 2px solid rgba(255, 255, 255, 0.2);
       background: white;
     }
-
     .spreadsheet-section {
       background: rgba(0, 0, 0, 0.7);
       padding: 30px;
@@ -156,7 +133,8 @@
       <div class="list-box">
         <h2>Supporters</h2>
         <p>List of people that chose to support us. Thank you a ton again 💖</p>
-        <ul id="supporterList" style="text-align: left; padding-left: 20px;"></ul>
+        <p id="totalDonated"><em>Loading supporters...</em></p>
+        <ul id="supporterList" style="text-align: left;"></ul>
       </div>
     </div>
 
@@ -175,50 +153,53 @@
     function toggleTheme() {
       document.body.classList.toggle("light-mode");
     }
+
+    function fetchSupporters() {
+      const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTRz8cs7JRu5NgNCBOxrnq5u1aSUMF5skG1otqUkZAsv3xtT4N9qdRbWaPqs0z4KU13EdFPSHnjletQ/pub?output=csv";
+
+      fetch(url)
+        .then(res => res.text())
+        .then(data => {
+          const rows = data.trim().split("\n").slice(1); // Skip header
+          const supporters = [];
+
+          for (let row of rows) {
+            const cols = row.split(",");
+            const amount = parseFloat(cols[2]);
+            let name = cols[3]?.trim() || "Anonymous";
+
+            if (!isNaN(amount)) {
+              supporters.push({ amount, name });
+            }
+          }
+
+          supporters.sort((a, b) => {
+            if (b.amount !== a.amount) return b.amount - a.amount;
+            return a.name.localeCompare(b.name);
+          });
+
+          const supporterList = document.getElementById("supporterList");
+          const totalElement = document.getElementById("totalDonated");
+
+          let total = 0;
+          supporterList.innerHTML = "";
+
+          supporters.forEach(({ amount, name }) => {
+            total += amount;
+            const li = document.createElement("li");
+            li.textContent = `$${amount.toFixed(2)} — ${name}`;
+            supporterList.appendChild(li);
+          });
+
+          totalElement.innerHTML = `<strong>Total Donated:</strong> $${total.toFixed(2)}`;
+        })
+        .catch(err => {
+          document.getElementById("totalDonated").textContent = "Could not load supporter data.";
+          console.error(err);
+        });
+    }
+
+    document.addEventListener("DOMContentLoaded", fetchSupporters);
   </script>
-  <script type="text/javascript">
-  function drawSupporters() {
-    const query = new google.visualization.Query(
-      'https://docs.google.com/spreadsheets/d/1fi6Y9nRRD5XR6aXGVCpPvPx5XOOauYQpIWvxuX8hV0s/gviz/tq?sheet=Donations'
-    );
-    query.send(handleQueryResponse);
-  }
-
-  function handleQueryResponse(response) {
-    if (response.isError()) {
-      console.error('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
-      return;
-    }
-
-    const data = response.getDataTable();
-    const supporterList = document.getElementById("supporterList");
-    const entries = [];
-
-    for (let i = 1; i < data.getNumberOfRows(); i++) {
-      const name = data.getValue(i, 3); // Column D = index 3
-      const amountStr = data.getFormattedValue(i, 2); // Column C = index 2
-
-      if (!name || !amountStr) continue;
-      const amount = parseFloat(amountStr.replace(/[^0-9.]/g, ''));
-      if (isNaN(amount)) continue;
-
-      entries.push({ name, amount });
-    }
-
-    // Sort by amount DESC, then name ASC
-    entries.sort((a, b) => b.amount - a.amount || a.name.localeCompare(b.name));
-
-    for (const entry of entries) {
-      const li = document.createElement("li");
-      li.textContent = `$${entry.amount.toFixed(2)} — ${entry.name}`;
-      supporterList.appendChild(li);
-    }
-  }
-
-  // Load the Google Charts lib
-  const script = document.createElement("script");
-  script.src = "https://www.gstatic.com/charts/loader.js";
-  script.onload = () => google.charts.setOnLoadCallback(drawSupporters);
-  document.head.appendChild(script);
-</script>
-</html> 
+</body>
+</html>
