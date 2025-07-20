@@ -47,11 +47,12 @@
       border-radius: 6px;
       cursor: pointer;
       font-size: 0.9em;
+      white-space: nowrap;
     }
     h1 {
-      text-align: center;
       font-size: 1.8rem;
       margin: 0;
+      text-align: center;
       flex: 1;
     }
     .content {
@@ -133,7 +134,7 @@
       <div class="list-box">
         <h2>Supporters</h2>
         <p>List of people that chose to support us. Thank you a ton again 💖</p>
-        <p>Total Donated: <span id="totalDonated">$0.00</span></p>
+        <p id="totalDonated"><strong>Total Donated:</strong> Loading...</p>
         <ul id="supporterList" style="text-align: left;"></ul>
       </div>
     </div>
@@ -155,27 +156,29 @@
     }
 
     function fetchSupporters() {
-      const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTRz8cs7JRu5NgNCBOxrnq5u1aSUMF5skG1otqUkZAsv3xtT4N9qdRbWaPqs0z4KU13EdFPSHnjletQ/pub?output=csv";
+      const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTRz8cs7JRu5NgNCBOxrnq5u1aSUMF5skG1otqUkZAsv3xtT4N9qdRbWaPqs0z4KU13EdFPSHnjletQ/pub?gid=0&single=true&output=csv";
 
       fetch(url)
         .then(res => res.text())
         .then(data => {
-          const rows = data.trim().split("\n").slice(1); // Skip header
+          const rows = data.trim().split("\n").slice(1);
           const supporters = [];
 
           for (let row of rows) {
             const cols = row.split(",");
             const amount = parseFloat(cols[2]);
             let name = cols[3]?.trim() || "Anonymous";
+            const time = new Date(cols[1]).getTime() || 0;
 
             if (!isNaN(amount)) {
-              supporters.push({ amount, name });
+              supporters.push({ amount, name, time });
             }
           }
 
           supporters.sort((a, b) => {
             if (b.amount !== a.amount) return b.amount - a.amount;
-            return a.name.localeCompare(b.name);
+            if (a.name !== b.name) return a.name.localeCompare(b.name);
+            return b.time - a.time;
           });
 
           const supporterList = document.getElementById("supporterList");
