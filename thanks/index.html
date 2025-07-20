@@ -158,11 +158,6 @@
   </div>
 
   <script>
-    function toggleTheme() {
-      document.body.classList.toggle("light-mode");
-    }
-    </script>
-<script>
   async function fetchDonations() {
     const spreadsheetId = '1fi6Y9nRRD5XR6aXGVCpPvPx5XOOauYQpIWvxuX8hV0s';
     const sheetName = 'Donations';
@@ -171,10 +166,11 @@
     try {
       const res = await fetch(url);
       const text = await res.text();
-      const json = JSON.parse(text.substring(47).slice(0, -2));
-      const rows = json.table.rows;
+      const json = JSON.parse(text.substring(47).slice(0, -2)); // ✅ correct and safe
 
+      const rows = json.table.rows;
       let donors = [];
+
       for (let row of rows) {
         const amount = parseFloat(row.c[2]?.v?.replace('$', '') || 0);
         const name = row.c[3]?.v?.trim() || 'Anonymous';
@@ -183,6 +179,9 @@
           donors.push({ name, amount, date });
         }
       }
+
+      // Sort donors by amount descending, then name
+      donors.sort((a, b) => b.amount - a.amount || a.name.localeCompare(b.name));
 
       // Show donors
       const donorList = document.getElementById('donorList');
