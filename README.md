@@ -1,7 +1,7 @@
 # dragondusk.com
 
 DragonDusk.com
-Personal website & donation page for Sic4rioDragon and Melonie Rose.
+Personal website & donation page for Sic4rioDragon and DuskWolf
 A story of long-distance love, resilience, and community support.
 
 This site includes:
