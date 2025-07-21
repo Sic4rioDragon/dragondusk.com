@@ -1,8 +1,7 @@
 # dragondusk.com
 
 DragonDusk.com
-Personal website & donation page for Sic4rioDragon and DuskWolf
-A story of long-distance love, resilience, and community support.
+A personal and heartfelt website telling the story of SicarioDragon and Duskwolf — a couple navigating a long-distance relationship between Switzerland and North Carolina. Built to share our journey, raise awareness about our situation, and offer a way for others to support our reunion.
 
 This site includes:
 
