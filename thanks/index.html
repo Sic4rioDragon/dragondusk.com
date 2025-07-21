@@ -182,7 +182,7 @@
           donors.push({ name, amount });
         }
       }
-
+    donors.sort((a, b) => b.amount - a.amount);
       // Update DOM
       const donorList = document.getElementById('donorList');
       donorList.innerHTML = donors.map(d =>
