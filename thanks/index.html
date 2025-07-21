@@ -164,18 +164,26 @@
     try {
       const res = await fetch(publishedUrl);
       const text = await res.text();
-      const lines = text.trim().split('\n').slice(1); // skip header row
+      const lines = text.trim().split('\n');
 
-      let donors = [];
+      console.log("🔍 Raw lines:", lines);
 
-      for (const line of lines) {
-        const [index, date, amountStr, name] = line.split('\t');
-        const amount = parseFloat(amountStr.replace('$', ''));
+      const donors = [];
+
+      for (let i = 1; i < lines.length; i++) {
+        const row = lines[i].split('\t');
+        const amountStr = row[2]?.replace('$', '').replace(',', '').trim();
+        const amount = parseFloat(amountStr);
+        const name = row[3]?.trim() || 'Anonymous';
+
+        console.log(`👉 Row ${i}:`, row, '→ amount:', amount);
+
         if (!isNaN(amount) && amount > 0) {
-          donors.push({ name: name?.trim() || 'Anonymous', amount });
+          donors.push({ name, amount });
         }
       }
 
+      // Update DOM
       const donorList = document.getElementById('donorList');
       donorList.innerHTML = donors.map(d =>
         `<li class="donor-entry"><span class="donor-amount">$${d.amount.toFixed(2)}</span> — ${d.name}</li>`
@@ -183,6 +191,7 @@
 
       const total = donors.reduce((sum, d) => sum + d.amount, 0);
       document.getElementById('totalDonated').innerHTML = `<strong>Total Donated:</strong> $${total.toFixed(2)}`;
+
     } catch (err) {
       console.error('❌ Failed to fetch TSV donations:', err);
       document.getElementById('donorList').innerHTML = '<em>Failed to load donations.</em>';
