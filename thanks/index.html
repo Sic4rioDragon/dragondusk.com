@@ -139,7 +139,7 @@
         <p>Currently there are no updates about our situation.</p>
       </div>
       <div class="list-box">
-        <h2>Supporters testing</h2>
+        <h2>Supporters</h2>
         <p>List of people that chose to support us. Thank you a ton again 💖</p>
         <p id="totalDonated"><strong>Total Donated:</strong> Loading...</p>
         <ul id="donorList" style="text-align: left;"></ul>
@@ -159,39 +159,32 @@
 
   <script>
   async function fetchDonations() {
-    const spreadsheetId = '1fi6Y9nRRD5XR6aXGVCpPvPx5XOOauYQpIWvxuX8hV0s';
-    const sheetName = 'Donations';
-    const url = `https://docs.google.com/spreadsheets/d/${spreadsheetId}/gviz/tq?tqx=out:json&sheet=${sheetName}`;
+    const publishedUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTRz8cs7JRu5NgNCBOxrnq5u1aSUMF5skG1otqUKZAsv3xtT4N9qdRbWaPqs0z4KU13EdFPSHnJletQ/pub?output=tsv';
 
     try {
-      const res = await fetch(url);
+      const res = await fetch(publishedUrl);
       const text = await res.text();
-
-      // ✅ Safely extract JSON from weird Google wrapper
-      const json = JSON.parse(text.substring(47).slice(0, -2));
-      const rows = json.table.rows;
+      const lines = text.trim().split('\n').slice(1); // skip header row
 
       let donors = [];
-      for (let row of rows) {
-        const amount = parseFloat(row.c[2]?.v?.replace('$', '') || 0);
-        const name = row.c[3]?.v?.trim() || 'Anonymous';
+
+      for (const line of lines) {
+        const [index, date, amountStr, name] = line.split('\t');
+        const amount = parseFloat(amountStr.replace('$', ''));
         if (!isNaN(amount) && amount > 0) {
-          donors.push({ name, amount });
+          donors.push({ name: name?.trim() || 'Anonymous', amount });
         }
       }
 
-      // ✅ Show donors
       const donorList = document.getElementById('donorList');
-      donorList.innerHTML = donors
-        .map(d => `<li class="donor-entry"><span class="donor-amount">$${d.amount.toFixed(2)}</span> — ${d.name}</li>`)
-        .join('');
+      donorList.innerHTML = donors.map(d =>
+        `<li class="donor-entry"><span class="donor-amount">$${d.amount.toFixed(2)}</span> — ${d.name}</li>`
+      ).join('');
 
-      // ✅ Show total
       const total = donors.reduce((sum, d) => sum + d.amount, 0);
       document.getElementById('totalDonated').innerHTML = `<strong>Total Donated:</strong> $${total.toFixed(2)}`;
-
     } catch (err) {
-      console.error('❌ Error fetching donation data:', err);
+      console.error('❌ Failed to fetch TSV donations:', err);
       document.getElementById('donorList').innerHTML = '<em>Failed to load donations.</em>';
     }
   }
