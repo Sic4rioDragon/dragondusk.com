@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
   <meta charset="UTF-8" />
-  <title>Thank You – DragonDusk</title>
+  <title>Danke – DragonDusk</title>
   <link rel="icon" type="image/png" href="/assets/DragonNDusk.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta property="og:title" content="Thank You – DragonDusk" />
-  <meta property="og:description" content="A heartfelt thank you to everyone who supported us 🖤" />
+  <meta property="og:title" content="Danke – DragonDusk" />
+  <meta property="og:description" content="Ein herzliches Dankeschön an alle, die uns unterstützt haben 🖤" />
   <meta property="og:image" content="https://dragondusk.com/assets/Duskbackground.png" />
-  <meta property="og:url" content="https://dragondusk.com/thanks" />
+  <meta property="og:url" content="https://dragondusk.com/thanks/de" />
   <meta name="twitter:card" content="summary_large_image" />
   <style>
     :root {
@@ -39,7 +39,8 @@
       margin-bottom: 40px;
     }
     .back-btn,
-    .toggle-theme {
+    .toggle-theme,
+    .lang-switch {
       background: none;
       border: 2px solid var(--text-color);
       color: var(--text-color);
@@ -48,6 +49,11 @@
       cursor: pointer;
       font-size: 0.9em;
       white-space: nowrap;
+    }
+    .lang-switch img {
+      height: 14px;
+      margin-left: 5px;
+      vertical-align: middle;
     }
     h1 {
       font-size: 1.8rem;
@@ -115,47 +121,44 @@
       border: 1px solid rgba(255, 255, 255, 0.1);
     }
     .donor-entry {
-  margin-top: 10px;
-}
-.donor-amount {
-  font-weight: bold;
-  color: #00ffcc;
-}
+      margin-top: 10px;
+    }
+    .donor-amount {
+      font-weight: bold;
+      color: #00ffcc;
+    }
   </style>
 </head>
 <body>
   <div class="header">
-  <a class="back-btn" href="/help">← Back to Help</a>
-  <h1>Thank you so much for your support 💙</h1>
-  <div style="display: flex; gap: 10px;">
-    <a class="back-btn" href="/thanks/de/">
-      <img src="/assets/german_flag.webp" alt="Deutsch" style="height: 16px; vertical-align: middle; margin-right: 6px;" />
-      Deutsch
+    <a class="back-btn" href="/help/de">← Zurück zu Hilfe</a>
+    <h1>Vielen Dank für eure Unterstützung 💙</h1>
+    <a class="lang-switch" href="/thanks">
+      EN <img src="/assets/Englishicon.webp" alt="EN" />
     </a>
-    <button class="toggle-theme" onclick="toggleTheme()">Toggle Theme</button>
+    <button class="toggle-theme" onclick="toggleTheme()">Design wechseln</button>
   </div>
-</div>
 
   <div class="content">
-    <p>We can't thank you enough for donating to us! Every bit helps us be together and work toward a future. If you'd like to be listed here, <a href="mailto:dragonndusk@dragondusk.com">email</a> or DM us 💌</p>
+    <p>Wir können euch gar nicht genug danken! Jede Hilfe bringt uns ein Stück näher an unser Ziel. Wenn ihr namentlich erwähnt werden möchtet, schreibt uns eine <a href="mailto:dragonndusk@dragondusk.com">E-Mail</a> oder DM 💌</p>
 
     <div class="lists-container">
       <div class="list-box">
-        <h2>Updates</h2>
-        <p>Currently there are no updates about our situation.</p>
+        <h2>Neuigkeiten</h2>
+        <p>Aktuell gibt es keine Neuigkeiten zu unserer Situation.</p>
       </div>
       <div class="list-box">
-        <h2>Supporters</h2>
-        <p>List of people that chose to support us. Thank you a ton again 💖</p>
-        <p id="totalDonated"><strong>Total Donated:</strong> Loading...</p>
+        <h2>Unterstützer</h2>
+        <p>Liste der Menschen, die uns unterstützt haben. Vielen lieben Dank 💖</p>
+        <p id="totalDonated"><strong>Gesamtspenden:</strong> Lädt...</p>
         <ul id="donorList" style="text-align: left;"></ul>
       </div>
     </div>
 
     <div class="spreadsheet-section">
       <div style="text-align: center;">
-        <h2>📊 Donation Log</h2>
-        <p>You can view the full donation log here:</p>
+        <h2>📊 Spendenübersicht</h2>
+        <p>Die komplette Übersicht findet ihr hier:</p>
         <div class="iframe-wrapper">
           <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTRz8cs7JRu5NgNCBOxrnq5u1aSUMF5skG1otqUkZAsv3xtT4N9qdRbWaPqs0z4KU13EdFPSHnjletQ/pubhtml?widget=true&amp;headers=false"></iframe>
         </div>
@@ -164,6 +167,10 @@
   </div>
 
   <script>
+  function toggleTheme() {
+    document.body.classList.toggle("light-mode");
+  }
+
   async function fetchDonations() {
     const publishedUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTRz8cs7JRu5NgNCBOxrnq5u1aSUMF5skG1otqUkZAsv3xtT4N9qdRbWaPqs0z4KU13EdFPSHnjletQ/pub?gid=62467973&single=true&output=tsv';
 
@@ -172,40 +179,34 @@
       const text = await res.text();
       const lines = text.trim().split('\n');
 
-      console.log("🔍 Raw lines:", lines);
-
       const donors = [];
-
       for (let i = 1; i < lines.length; i++) {
         const row = lines[i].split('\t');
         const amountStr = row[2]?.replace('$', '').replace(',', '').trim();
         const amount = parseFloat(amountStr);
-        const name = row[3]?.trim() || 'Anonymous';
-
-        console.log(`👉 Row ${i}:`, row, '→ amount:', amount);
+        const name = row[3]?.trim() || 'Anonym';
 
         if (!isNaN(amount) && amount > 0) {
           donors.push({ name, amount });
         }
       }
-    donors.sort((a, b) => b.amount - a.amount);
-      // Update DOM
+
+      donors.sort((a, b) => b.amount - a.amount);
+
       const donorList = document.getElementById('donorList');
       donorList.innerHTML = donors.map(d =>
         `<li class="donor-entry"><span class="donor-amount">$${d.amount.toFixed(2)}</span> — ${d.name}</li>`
       ).join('');
 
       const total = donors.reduce((sum, d) => sum + d.amount, 0);
-      document.getElementById('totalDonated').innerHTML = `<strong>Total Donated:</strong> $${total.toFixed(2)}`;
-
+      document.getElementById('totalDonated').innerHTML = `<strong>Gesamtspenden:</strong> $${total.toFixed(2)}`;
     } catch (err) {
-      console.error('❌ Failed to fetch TSV donations:', err);
-      document.getElementById('donorList').innerHTML = '<em>Failed to load donations.</em>';
+      console.error('❌ Fehler beim Laden der Spenden:', err);
+      document.getElementById('donorList').innerHTML = '<em>Fehler beim Laden.</em>';
     }
   }
 
   fetchDonations();
-</script>
-
+  </script>
 </body>
 </html>

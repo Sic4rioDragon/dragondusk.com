@@ -10,74 +10,94 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Help – DragonDusk</title>
-
-<style>
-  :root {
-    --bg-color: #111;
-    --text-color: #fff;
-    --link-color: #8dcff4;
-  }
-  body.light-mode {
-    --bg-color: #f5f5f5;
-    --text-color: #111;
-    --link-color: #0077cc;
-  }
-  body {
-    font-family: Arial, sans-serif;
-    font-size: 1em; /* default size restored */
-    background: var(--bg-color) url('/assets/Duskbackground.png') no-repeat fixed;
-    background-size: cover;
-    background-position: 60% center;
-    color: var(--text-color);
-    padding: 20px;
-    max-width: 800px;
-    margin: auto;
-    transition: background 0.3s, color 0.3s, background-image 0.3s;
-  }
-  body.light-mode {
-    background-image: none;
-  }
-  h1 {
-    text-align: center;
-    font-size: 1.8rem;
-    margin-bottom: 0.5em;
-  }
-  h2 {
-    font-size: 1.2rem;
-    text-align: center;
-    margin-top: 1.2em;
-    margin-bottom: 0.5em;
-  }
-  p {
-    line-height: 1.4;
-    margin-bottom: 0.6em;
-  }
-  a {
-    color: var(--link-color);
-  }
-  .donate-btn {
-    display: block;
-    text-align: center;
-    margin-top: 10px;
-  }
-  .toggle-theme {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background: none;
-    border: 2px solid var(--text-color);
-    color: var(--text-color);
-    padding: 5px 10px;
-    border-radius: 6px;
-    cursor: pointer;
-  }
-</style>
-
+  <style>
+    :root {
+      --bg-color: #111;
+      --text-color: #fff;
+      --link-color: #8dcff4;
+    }
+    body.light-mode {
+      --bg-color: #f5f5f5;
+      --text-color: #111;
+      --link-color: #0077cc;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--bg-color) url('/assets/Duskbackground.png') no-repeat fixed;
+      background-size: cover;
+      background-position: 60% center;
+      color: var(--text-color);
+      padding: 20px;
+      max-width: 800px;
+      margin: auto;
+      transition: background 0.3s, color 0.3s;
+    }
+    body.light-mode {
+      background-image: none;
+    }
+    h1 {
+      text-align: center;
+      font-size: 1.8rem;
+      margin-bottom: 0.5em;
+    }
+    h2 {
+      font-size: 1.2rem;
+      text-align: center;
+      margin-top: 1.2em;
+      margin-bottom: 0.5em;
+    }
+    p {
+      line-height: 1.4;
+      margin-bottom: 0.6em;
+    }
+    a {
+      color: var(--link-color);
+    }
+    .donate-btn {
+      display: block;
+      text-align: center;
+      margin-top: 10px;
+    }
+    .top-buttons {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      gap: 10px;
+    }
+    .top-buttons button {
+      background: none;
+      border: 2px solid var(--text-color);
+      color: var(--text-color);
+      padding: 5px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.85em;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .top-buttons img {
+      height: 14px;
+    }
+    .disclaimer {
+      font-size: 0.8em;
+      margin-top: 40px;
+      text-align: center;
+      color: var(--text-color);
+      opacity: 0.8;
+    }
+  </style>
 </head>
 <body>
-  <button class="toggle-theme" onclick="toggleTheme()">Toggle Theme</button>
+  <div class="top-buttons">
+    <button onclick="location.href='/help/de/'">
+      <img src="/assets/german_flag.webp" alt="Deutsch" /> Deutsch
+    </button>
+    <button onclick="toggleTheme()">Toggle Theme</button>
+  </div>
 
-  <h1>Help Me Reunite with My Girlfriend in North Carolina 💖✈️</h1>
+  <h1>Help Me Reunite with My Girlfriend in North Carolina 💖</h1>
 
   <p>hey there, i’m returning to switzerland on the <strong>29th of july</strong> after spending 3 amazing months with my girlfriend in north carolina. but this isn’t just a vacation ending — it’s a complicated situation.</p>
 
@@ -93,36 +113,31 @@
 
   <p style="text-align:center; font-size: 1.2em;">💙 thank you for reading and caring!</p>
   <p style="text-align:center; font-size: 0.95em;">
-  After donating, feel free to visit our <a href="/thanks">thank you page</a> 💙
+    After donating, feel free to visit our <a href="/thanks">thank you page</a> 💙
   </p>
 
   <div class="donate-btn">
-  <a href="https://www.paypal.com/donate/?business=ADVWBLQMJYKMG&no_recurring=0&item_name=https%3A%2F%2Fdragondusk.com%2Fhelp%2F&currency_code=USD" target="_blank">
-    <img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" alt="Donate via PayPal or Card" />
-  </a>
-</div>
+    <a href="https://www.paypal.com/donate/?business=ADVWBLQMJYKMG&no_recurring=0&item_name=https%3A%2F%2Fdragondusk.com%2Fhelp%2F&currency_code=USD" target="_blank">
+      <img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" alt="Donate via PayPal or Card" />
+    </a>
+  </div>
 
-  <br><br>
+  <h2>FAQ</h2>
 
-  <!-- FAQ SECTION -->
-  <div style="margin-top: 10px;">
-    <h2 style="text-align:center;">FAQ</h2>
-
-    <p><strong>What kind of visa are you applying for?</strong><br>
+  <p><strong>What kind of visa are you applying for?</strong><br>
     i plan on getting a work visa so i can start working and helping her out financially</p>
 
-    <p><strong>Is there a deadline to return to NC?</strong><br>
+  <p><strong>Is there a deadline to return to NC?</strong><br>
     not exactly, my best friend said i could stay at this place for at least 3 months, so that’s plenty of time (assuming i get accepted) for either a visa or a esta again</p>
 
-    <p><strong>What will donations be used for?</strong><br>
+  <p><strong>What will donations be used for?</strong><br>
     purely for flight ticket, visa and if we reach our goal (of about $1200, assuming it’s around that since the flights are very pricey) for food (will be publicly shown how much the ticket etc cost and how we used the money)</p>
 
-    <p><strong>What happens if you can’t get back?</strong><br>
+  <p><strong>What happens if you can’t get back?</strong><br>
     i will have to request financial support again and find a new shared apartment, or temporarily have to go into a homeless shelter or mental hospital with limited/no internet access.</p>
 
-    <p><strong>Will you track donations publicly?</strong><br>
+  <p><strong>Will you track donations publicly?</strong><br>
     yes, we’ll put all donations into this <a href="https://docs.google.com/spreadsheets/d/1fi6Y9nRRD5XR6aXGVCpPvPx5XOOauYQpIWvxuX8hV0s/edit?usp=sharing" target="_blank">google spreadsheet</a> (no names unless u want to be mentioned)</p>
-  </div>
 
   <script>
     function toggleTheme() {
