@@ -11,65 +11,29 @@
   <meta property="og:url" content="https://dragondusk.com/" />
   <meta name="twitter:card" content="summary_large_image" />
   <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background: #0a0a0a url('/assets/background.jpg') no-repeat center center fixed;
-      background-size: cover;
-      font-family: Arial, sans-serif;
-      color: #fff;
-      text-align: center;
-    }
-    .overlay {
-      background: rgba(0, 0, 0, 0.6);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 0 20px;
-    }
-    h1 {
-      font-size: 3rem;
-      margin: 0;
-    }
-    p {
-      font-size: 1.2rem;
-      max-width: 600px;
-      margin: 20px auto;
-    }
-    .buttons {
-      margin-top: 30px;
-    }
-    .buttons a {
-      display: inline-block;
-      background: #8dcff4;
-      color: #000;
-      text-decoration: none;
-      padding: 12px 24px;
-      border-radius: 6px;
-      margin: 0 10px;
-      transition: background 0.3s ease;
-    }
-    .buttons a:hover {
-      background: #4aa3d3;
-    }
-    footer {
-      margin-top: 50px;
-      font-size: 0.8rem;
-      color: #aaa;
-    }
+    body{margin:0;padding:0;background:#0a0a0a url('/assets/background.jpg') no-repeat center/cover fixed;
+      font-family:Arial,sans-serif;color:#fff;text-align:center}
+    .overlay{background:rgba(0,0,0,.6);min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:0 20px}
+    h1{font-size:3rem;margin:0}
+    p{font-size:1.2rem;max-width:600px;margin:20px auto}
+    .buttons{margin-top:30px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+    .buttons a{display:inline-block;background:#8dcff4;color:#000;text-decoration:none;padding:12px 24px;border-radius:6px;transition:.2s}
+    .buttons a:hover{background:#4aa3d3}
+    .staff{background:#e6e6e6}
+    .staff:hover{background:#cfcfcf}
+    footer{margin-top:50px;font-size:.8rem;color:#aaa}
   </style>
 </head>
 <body>
   <div class="overlay">
     <h1>Welcome to DragonDusk</h1>
-    <p>This website is a WIP, because of reasons... <a href="/donate" style="color:#8dcff4;">check out this page</a> for more info.</p>
+    <p>This website is a WIP, because of reasons... <a href="/help" style="color:#8dcff4;">check out this page</a> for more info.</p>
     <div class="buttons">
       <a href="https://discord.gg/yourdiscordinvite" target="_blank">Join Our Discord</a>
+      <!-- New staff button -->
+      <a class="staff" href="https://flight.dragondusk.com">Airport/Border Staff → Access Travel Summary</a>
     </div>
-    <footer>
-      &copy; 2025 DragonDusk & PopcornGaming — All rights reserved.
-    </footer>
+    <footer>© 2025 DragonDusk & PopcornGaming — All rights reserved.</footer>
   </div>
 </body>
 </html>
