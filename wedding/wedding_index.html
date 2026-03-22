@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DragonDusk — Online Wedding Invite</title>
+  <link rel="icon" type="image/png" href="/assets/DragonNDusk.png" />
+  <meta property="og:title" content="Dusk & Dragon — Online Wedding Invite" />
+  <meta property="og:description" content="Private Minecraft wedding invite and event information for Dusk and Dragon." />
+  <meta property="og:image" content="https://dragondusk.com/assets/Duskbackground.png" />
+  <meta property="og:url" content="https://dragondusk.com/wedding/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <style>
+    :root {
+      --bg: #111;
+      --fg: #fff;
+      --muted: #d8d8d8;
+      --link: #8dcff4;
+      --panel: rgba(0, 0, 0, 0.58);
+      --panel-strong: rgba(0, 0, 0, 0.72);
+      --border: rgba(255, 255, 255, 0.16);
+      --accent-soft: rgba(141, 207, 244, 0.16);
+    }
+
+    * { box-sizing: border-box; }
+
+    body.light-mode {
+      --bg: #f6f6f6;
+      --fg: #111;
+      --muted: #2f2f2f;
+      --link: #0077cc;
+      --panel: rgba(255, 255, 255, 0.84);
+      --panel-strong: rgba(255, 255, 255, 0.92);
+      --border: rgba(0, 0, 0, 0.12);
+      --accent-soft: rgba(0, 119, 204, 0.08);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: var(--bg) url('/assets/Duskbackground.png') no-repeat fixed;
+      background-size: cover;
+      background-position: 60% center;
+      color: var(--fg);
+      line-height: 1.55;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    body.light-mode {
+      background-image: none;
+    }
+
+    a { color: var(--link); }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(6px);
+      background: rgba(0, 0, 0, 0.42);
+      border-bottom: 1px solid var(--border);
+    }
+
+    body.light-mode .topbar {
+      background: rgba(255, 255, 255, 0.75);
+    }
+
+    .topbar-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 12px 18px;
+      display: flex;
+      gap: 12px;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: bold;
+      letter-spacing: 0.02em;
+    }
+
+    .brand img {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+    }
+
+    .nav {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .nav a,
+    .nav button {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--fg);
+      text-decoration: none;
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.95rem;
+    }
+
+    .nav a:hover,
+    .nav button:hover {
+      background: var(--accent-soft);
+    }
+
+    .wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px 18px 56px;
+    }
+
+    .hero {
+      min-height: 44vh;
+      display: grid;
+      align-items: center;
+      margin-top: 10px;
+    }
+
+    .hero-card {
+      background: var(--panel-strong);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 28px 22px;
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.22);
+      text-align: center;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      margin-bottom: 10px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      border: 1px solid var(--border);
+      font-size: 0.9rem;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.1rem, 5vw, 3.7rem);
+      line-height: 1.1;
+    }
+
+    .hero p {
+      max-width: 760px;
+      margin: 16px auto 0;
+      color: var(--muted);
+      font-size: 1.08rem;
+    }
+
+    .hero-buttons {
+      margin-top: 22px;
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-block;
+      background: #8dcff4;
+      color: #000;
+      text-decoration: none;
+      padding: 12px 18px;
+      border-radius: 10px;
+      font-weight: bold;
+      border: none;
+    }
+
+    .btn.secondary {
+      background: transparent;
+      color: var(--fg);
+      border: 1px solid var(--border);
+    }
+
+    .btn:hover { filter: brightness(0.95); }
+
+    .countdown {
+      margin-top: 24px;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(90px, 1fr));
+      gap: 12px;
+      max-width: 650px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .countdown-box {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px 10px;
+    }
+
+    .countdown-box strong {
+      display: block;
+      font-size: 1.8rem;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .section {
+      margin-top: 22px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 24px 20px;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
+    }
+
+    .section h2 {
+      margin-top: 0;
+      font-size: 1.55rem;
+      text-align: center;
+    }
+
+    .intro-text {
+      max-width: 780px;
+      margin: 0 auto;
+      text-align: center;
+      color: var(--muted);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 18px;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+    }
+
+    body.light-mode .card {
+      background: rgba(0, 0, 0, 0.03);
+    }
+
+    .card h3 {
+      margin-top: 0;
+      margin-bottom: 10px;
+      font-size: 1.08rem;
+    }
+
+    .card p,
+    .card ul {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    ul {
+      padding-left: 18px;
+    }
+
+    .notice {
+      margin-top: 16px;
+      background: rgba(141, 207, 244, 0.12);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
+    }
+
+    .schedule {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .schedule-item {
+      display: grid;
+      grid-template-columns: 170px 1fr;
+      gap: 14px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    body.light-mode .schedule-item {
+      background: rgba(0, 0, 0, 0.02);
+    }
+
+    .time {
+      font-weight: bold;
+    }
+
+    .faq details {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
+      margin-top: 12px;
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    body.light-mode .faq details {
+      background: rgba(0, 0, 0, 0.02);
+    }
+
+    .faq summary {
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.92rem;
+      margin-top: 26px;
+      padding-bottom: 16px;
+    }
+
+    @media (max-width: 760px) {
+      .grid,
+      .countdown {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .schedule-item {
+        grid-template-columns: 1fr;
+      }
+
+      .topbar-inner {
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 460px) {
+      .grid,
+      .countdown {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-card,
+      .section {
+        padding: 20px 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <img src="/assets/DragonNDusk.png" alt="DragonDusk logo" />
+        <span>DragonDusk Wedding Invite</span>
+      </div>
+      <div class="nav">
+        <a href="#details">Details</a>
+        <a href="#schedule">Schedule</a>
+        <a href="#rsvp">RSVP</a>
+        <a href="#faq">FAQ</a>
+        <button type="button" onclick="document.body.classList.toggle('light-mode')">Toggle Theme</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <section class="hero">
+      <div class="hero-card">
+        <div class="eyebrow">Private invite • Minecraft wedding celebration</div>
+        <h1>Dusk & Dragon</h1>
+        <p>
+          If you received this link, you have been personally invited to the online wedding celebration of
+          <strong>Dusk (Duskrose)</strong> and <strong>Dragon (Sic4rioDragon / Dragon Graf)</strong>.
+          We wanted to celebrate in a way that feels like us: creative, online, a little magical, and shared with the people we care about.
+        </p>
+        <p>
+          <strong>Sunday, April 12, 2026</strong><br />
+          <strong>12:00 PM New York time / 6:00 PM CET</strong><br />
+          <strong>Location:</strong> Private Minecraft server<br />
+          <strong>Server IP:</strong> Coming soon
+        </p>
+        <div class="hero-buttons">
+          <a class="btn" href="#rsvp">RSVP / Guest Info</a>
+          <a class="btn secondary" href="#details">View Event Details</a>
+        </div>
+
+        <div class="countdown" aria-label="Countdown to ceremony">
+          <div class="countdown-box"><strong id="days">--</strong><span>Days</span></div>
+          <div class="countdown-box"><strong id="hours">--</strong><span>Hours</span></div>
+          <div class="countdown-box"><strong id="minutes">--</strong><span>Minutes</span></div>
+          <div class="countdown-box"><strong id="seconds">--</strong><span>Seconds</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="details" class="section">
+      <h2>About the Event</h2>
+      <p class="intro-text">
+        This will be a private online wedding celebration hosted inside Minecraft. Guests will be able to attend either in-game or by watching a livestream if one is active.
+        The ceremony itself will be short, heartfelt, and followed by screenshots, relaxing, and a casual celebration afterward.
+      </p>
+      <div class="notice">
+        <strong>Please do not publicly share this page or the final server details.</strong> This invite page is meant for invited guests only.
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Minecraft Server Info</h3>
+          <ul>
+            <li>Java Edition and Bedrock Edition should both be able to join</li>
+            <li>Proximity voice chat is planned</li>
+            <li>Server IP and version details will be added closer to the event</li>
+            <li>A full how-to-join guide will be posted once setup is finalized</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Recording / Streaming</h3>
+          <ul>
+            <li>This event will be recorded</li>
+            <li>It may also be streamed on Twitch and/or YouTube</li>
+            <li>If a livestream is active, the link will be posted here when live</li>
+            <li>By attending, you understand that your in-game name, chat, and possible voice interactions may appear</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>What to Expect</h3>
+          <ul>
+            <li>Guests join early and gather before the ceremony</li>
+            <li>A short ceremony begins at the listed time</li>
+            <li>Group screenshots happen right after the ceremony</li>
+            <li>Afterward there will be a relaxed hangout / celebration period</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Guest Notes</h3>
+          <ul>
+            <li>Nobody is required to speak</li>
+            <li>Proximity chat is optional but recommended if you want the full vibe</li>
+            <li>If you do not want to join in-game, you can still attend by watching the livestream if available</li>
+            <li>Please arrive early if you plan to join the server</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="schedule" class="section">
+      <h2>Planned Schedule</h2>
+      <p class="intro-text">
+        This is the current concept flow and may still be adjusted a little closer to the date.
+      </p>
+      <div class="schedule">
+        <div class="schedule-item">
+          <div class="time">11:30 AM NY time</div>
+          <div>
+            <strong>Server opens</strong><br />
+            Guests can join, get settled, find seating, and make sure everything is working before the ceremony starts.
+          </div>
+        </div>
+        <div class="schedule-item">
+          <div class="time">11:50 AM NY time</div>
+          <div>
+            <strong>Guests take their places</strong><br />
+            Final preparations, seating, and pre-ceremony settling in.
+          </div>
+        </div>
+        <div class="schedule-item">
+          <div class="time">12:00 PM NY time</div>
+          <div>
+            <strong>Ceremony begins</strong><br />
+            Welcome, vows/promises, symbolic exchange, and the official declaration.
+          </div>
+        </div>
+        <div class="schedule-item">
+          <div class="time">~12:15 PM NY time</div>
+          <div>
+            <strong>Group screenshots</strong><br />
+            Formal group photo first, then a few fun or more casual screenshots before everyone scatters.
+          </div>
+        </div>
+        <div class="schedule-item">
+          <div class="time">After photos</div>
+          <div>
+            <strong>Celebration / hangout</strong><br />
+            Casual gathering, talking, exploring, screenshots, and relaxing together after the ceremony.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Ceremony Concept</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>General tone</h3>
+          <p>Warm, sincere, a little fantasy/gamer flavored, and not overly formal. The ceremony should feel special without dragging on too long.</p>
+        </div>
+        <div class="card">
+          <h3>Length</h3>
+          <p>The ceremony itself is planned to stay fairly short — around 10 to 20 minutes — so it feels meaningful without becoming exhausting online.</p>
+        </div>
+        <div class="card">
+          <h3>Likely flow</h3>
+          <p>Welcome → entrance/processional → short speech → vows or promises → symbolic exchange → declaration → celebration → group photos.</p>
+        </div>
+        <div class="card">
+          <h3>Afterward</h3>
+          <p>Instead of a long formal reception, the post-ceremony part will be a more relaxed celebration and hangout in the world.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="rsvp" class="section">
+      <h2>RSVP / Guest Info</h2>
+      <p class="intro-text">
+        Please fill out the guest form so we know who is planning to attend, whether you are coming alone, and whether you would like to co-invite anyone.
+      </p>
+      <div class="grid">
+        <div class="card">
+          <h3>Planned form topics</h3>
+          <ul>
+            <li>Name / display name</li>
+            <li>Minecraft username</li>
+            <li>Attending: yes / no / maybe</li>
+            <li>Joining in-game or watching stream</li>
+            <li>Are you coming alone?</li>
+            <li>How many people would you like to co-invite?</li>
+            <li>Names of co-invited guests</li>
+            <li>Message to the couple</li>
+            <li>Public or private message preference</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Form status</h3>
+          <p>
+            The RSVP form has not been linked yet.<br /><br />
+            <strong>Google Form link:</strong> coming soon<br />
+            <strong>RSVP deadline:</strong> to be announced
+          </p>
+          <p style="margin-top:14px;">
+            <a class="btn" href="#" onclick="return false;" aria-disabled="true">RSVP Form Coming Soon</a>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Planned Extras</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>How to Join Guide</h3>
+          <p>A proper setup guide will be added later with the final server IP, version info, Bedrock/Java instructions, and any voice chat setup steps.</p>
+        </div>
+        <div class="card">
+          <h3>Livestream Link</h3>
+          <p>If the event is streamed, the Twitch and/or YouTube link will be posted here once it is live or scheduled.</p>
+        </div>
+        <div class="card">
+          <h3>Skin / Outfit Suggestion</h3>
+          <p>Fantasy, wedding, floral, moonlit, dusk, or dragon-themed skins are encouraged. Normal skins are still fine — just avoid troll or disruptive ones during the ceremony.</p>
+        </div>
+        <div class="card">
+          <h3>Post-event memories</h3>
+          <p>Later, this page may also hold screenshots, favorite moments, selected guest messages, and a VOD or archive if one is available.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section faq" id="faq">
+      <h2>FAQ</h2>
+      <details>
+        <summary>Do I have to talk in voice chat?</summary>
+        <p>No. Nobody is required to speak. Proximity chat is planned, but it is not meant to force anyone to talk.</p>
+      </details>
+      <details>
+        <summary>Do I have to join the Minecraft server to attend?</summary>
+        <p>No. If a livestream is active, you can attend by watching the stream instead.</p>
+      </details>
+      <details>
+        <summary>Can Java and Bedrock both join?</summary>
+        <p>That is the plan. Final connection details and any required steps will be posted later in the join guide.</p>
+      </details>
+      <details>
+        <summary>When will the server IP be posted?</summary>
+        <p>Closer to the event, once the final setup is ready and we are comfortable sharing the details with invited guests.</p>
+      </details>
+      <details>
+        <summary>Will this be recorded?</summary>
+        <p>Yes. The event will be recorded, and it may also be livestreamed on Twitch and/or YouTube.</p>
+      </details>
+      <details>
+        <summary>What if something goes wrong technically?</summary>
+        <p>If there are technical issues, updates will be posted here and/or through the communication method shared with invited guests.</p>
+      </details>
+    </section>
+
+    <section class="section">
+      <h2>Behavior & Respect</h2>
+      <p class="intro-text">
+        We want this to be a fun, welcoming, and memorable event for everyone attending.
+      </p>
+      <div class="grid">
+        <div class="card">
+          <h3>Please do</h3>
+          <ul>
+            <li>Be respectful to the couple and all guests</li>
+            <li>Follow host or moderator instructions</li>
+            <li>Keep the ceremony area calm during the important moments</li>
+            <li>Help keep the event comfortable for everyone</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Please do not</h3>
+          <ul>
+            <li>Grief, troll, or disrupt the event</li>
+            <li>Interrupt vows or ceremony flow on purpose</li>
+            <li>Use the event to start drama</li>
+            <li>Publicly share private server details without permission</li>
+          </ul>
+        </div>
+      </div>
+      <div class="notice">
+        Anyone who intentionally causes problems may be removed or banned from the server.
+      </div>
+    </section>
+
+    <footer>
+      © 2026 DragonDusk — Wedding invite page for Dusk & Dragon<br />
+      More information will be added here as details are finalized.
+    </footer>
+  </div>
+
+  <script>
+    (function () {
+      const target = new Date('2026-04-12T12:00:00-04:00').getTime();
+      const days = document.getElementById('days');
+      const hours = document.getElementById('hours');
+      const minutes = document.getElementById('minutes');
+      const seconds = document.getElementById('seconds');
+
+      function updateCountdown() {
+        const now = Date.now();
+        const diff = target - now;
+
+        if (diff <= 0) {
+          days.textContent = '0';
+          hours.textContent = '0';
+          minutes.textContent = '0';
+          seconds.textContent = '0';
+          return;
+        }
+
+        const day = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hour = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const minute = Math.floor((diff / (1000 * 60)) % 60);
+        const second = Math.floor((diff / 1000) % 60);
+
+        days.textContent = day;
+        hours.textContent = hour;
+        minutes.textContent = minute;
+        seconds.textContent = second;
+      }
+
+      updateCountdown();
+      setInterval(updateCountdown, 1000);
+    })();
+  </script>
+</body>
+</html>
